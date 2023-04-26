@@ -3,12 +3,19 @@ var express = require("express");
 var path = require("path");
 var cookieParser = require("cookie-parser");
 var logger = require("morgan");
-
-var indexRouter = require("./routes/index");
-var usersRouter = require("./routes/users");
+const mongoose = require("mongoose");
+const cors = require("cors");
+require("dotenv").config();
+require("./auth/auth");
+var Routes = require("./routes/routes");
 
 var app = express();
-// view engine setup
+app.use(passport.initialize());
+// mongoDB connection
+const mongoDb = process.env.MONGODB_URI;
+mongoose.connect(mongoDb, { useUnifiedTopology: true, useNewUrlParser: true });
+const db = mongoose.connection;
+db.on("error", console.error.bind(console, "mongo connection error"));
 
 app.use(logger("dev"));
 app.use(express.json());
@@ -16,8 +23,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
 
-app.use("/", indexRouter);
-app.use("/users", usersRouter);
+app.use("/", Routes);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
