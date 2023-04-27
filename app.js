@@ -4,6 +4,7 @@ var path = require("path");
 var cookieParser = require("cookie-parser");
 var logger = require("morgan");
 const mongoose = require("mongoose");
+const passport = require("passport");
 const cors = require("cors");
 require("dotenv").config();
 require("./auth/auth");
@@ -21,7 +22,6 @@ app.use(logger("dev"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use(express.static(path.join(__dirname, "public")));
 
 app.use("/", Routes);
 
@@ -38,7 +38,10 @@ app.use(function (err, req, res, next) {
 
   // render the error page
   res.status(err.status || 500);
-  res.render("error");
+  res.json({
+    error: err.message,
+    status: err.status || 500,
+  });
 });
 
 module.exports = app;

@@ -1,17 +1,16 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
-const bcrypt = require("bcryptjs");
+const bcrypt = require("bcrypt");
 const UserSchema = new Schema({
   username: { type: String, required: true, maxLength: 20 },
   password: { type: String, required: true },
 });
 
-UserSchema.pre("save", async (req, res, next) => {
+UserSchema.pre("save", async function (next) {
   const user = this;
   const hash = await bcrypt.hash(this.password, 10);
 
   this.password = hash;
-  console.log("user creating and saving");
   next();
 });
 
