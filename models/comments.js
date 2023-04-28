@@ -8,7 +8,7 @@ const CommentSchema = new Schema({
   postID: { type: Schema.Types.ObjectId, ref: "Post", required: true },
 });
 
-PostSchema.virtual("url").get(function () {
+CommentSchema.virtual("url").get(function () {
   return `/posts/:postID/comments/${this._id}`;
 });
 

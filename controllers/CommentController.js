@@ -71,12 +71,19 @@ exports.get_a_single_comment = async (req, res, next) => {
 
 exports.delete_a_comment = async (req, res, next) => {
   try {
-    const comment = await CommentModel.findByIdAndRemove(req.params.commentID);
+    const comment = await CommentModel.findById(req.params.commentID);
     if (!comment) {
-      res.status(404).json({ message: "comment not found" });
+      return res.status(404).json({ message: "comment not found" });
     }
+    console.log(comment.postID);
+    const Post = await PostModel.findById(comment.postID);
+    if (Post.user_name.toString() !== req.user._id) {
+      return res.status(400).json({ message: "no rights to delete comment" });
+    }
+
+    await CommentModel.findByIdAndRemove(req.params.commentID);
     res.json({
-      message: "deletetion successful",
+      message: `deleted ${req.params.commentID} successfully`,
     });
   } catch (err) {
     return next(err);

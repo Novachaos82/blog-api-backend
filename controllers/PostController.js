@@ -112,7 +112,7 @@ exports.update_post = [
 
 exports.delete_a_post = async (req, res, next) => {
   try {
-    const existingPost = await PostModel.findByIdAndRemove(req.params.id);
+    const existingPost = await PostModel.findById(req.params.id);
 
     if (!existingPost) {
       return res.status(404).json({ message: "Post not found" });
@@ -122,9 +122,12 @@ exports.delete_a_post = async (req, res, next) => {
       return res
         .status(401)
         .json({ message: "You are not authorized to perform this action" });
+    } else {
+      await PostModel.findByIdAndRemove(req.params.id);
+      return res.json({
+        message: `post ${req.params.id} deleted successfully`,
+      });
     }
-
-    res.json({ message: `post ${req.params.id} deleted successfully` });
   } catch (err) {
     return next(err);
   }
