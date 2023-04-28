@@ -28,6 +28,12 @@ router.delete(
   Post_controller.delete_a_post
 );
 
+router.delete(
+  "/posts/:id",
+  passport.authenticate("jwt", { session: false }),
+  Post_controller.delete_a_post
+);
+
 router.post("/posts/:postID/comments", Comment_controller.comment_post);
 
 router.get("/posts/:postID/comments", Comment_controller.get_comments);
