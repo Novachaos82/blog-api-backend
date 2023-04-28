@@ -9,6 +9,10 @@ const PostSchema = new Schema({
   published: { default: false, type: Boolean },
 });
 
+PostSchema.virtual("url").get(function () {
+  return `/posts/${this._id}`;
+});
+
 const model = mongoose.model("Post", PostSchema);
 
 module.exports = model;

@@ -13,10 +13,19 @@ router.get("/", function (req, res, next) {
 router.post("/signup", User_Controller.sign_up_post);
 router.post("/login", User_Controller.log_in_post);
 
-router.post(
-  "/posts",
+router.get("/posts/:id", Post_controller.get_a_single_post);
+router.get("/posts", Post_controller.get_all_post);
+
+router.put(
+  "/posts/:id",
   passport.authenticate("jwt", { session: false }),
-  Post_controller.create_post
+  Post_controller.update_post
+);
+
+router.delete(
+  "/posts/:id",
+  passport.authenticate("jwt", { session: false }),
+  Post_controller.delete_a_post
 );
 
 module.exports = router;
