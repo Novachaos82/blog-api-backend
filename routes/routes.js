@@ -8,12 +8,13 @@ const Comment_controller = require("../controllers/CommentController");
 /* GET home page. */
 
 /* Authentication routes */
-router.post("/signup", User_Controller.sign_up_post);
-router.post("/login", User_Controller.log_in_post);
 
 router.get("/", function (req, res, next) {
-  res.json({ title: "Express" });
+  res.redirect("/api/posts");
 });
+
+router.post("/signup", User_Controller.sign_up_post);
+router.post("/login", User_Controller.log_in_post);
 
 /*all posts related  routes */
 router.get("/posts", Post_controller.get_all_post);

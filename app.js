@@ -9,6 +9,7 @@ const cors = require("cors");
 require("dotenv").config();
 require("./auth/auth");
 var Routes = require("./routes/routes");
+const indexRoute = require("./routes/indexRoute");
 
 var app = express();
 app.use(passport.initialize());
@@ -22,8 +23,10 @@ app.use(logger("dev"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
+app.use(cors());
 
-app.use("/", Routes);
+app.use("/", indexRoute);
+app.use("/api", Routes);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
