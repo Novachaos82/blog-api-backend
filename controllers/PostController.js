@@ -75,9 +75,10 @@ exports.update_post = [
       _id: req.params.id,
       title: req.body.title,
       details: req.body.details,
+      published: req.body.published,
       user_name: req.user._id,
     });
-
+    console.log(req.user._id);
     if (!errors.isEmpty()) {
       res.json({
         message: "error",
