@@ -15,6 +15,7 @@ router.get("/", function (req, res, next) {
 
 router.post("/signup", User_Controller.sign_up_post);
 router.post("/login", User_Controller.log_in_post);
+router.get("/logout", User_Controller.logout);
 
 /*all posts related  routes */
 router.get("/posts", Post_controller.get_all_post);

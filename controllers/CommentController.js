@@ -24,16 +24,16 @@ exports.comment_post = [
         body: req.body,
         errors: errors.array(),
       });
-    }
-
-    try {
-      await comment.save();
-      res.json({
-        message: "successful",
-        comment: comment,
-      });
-    } catch (err) {
-      return next(err);
+    } else {
+      try {
+        await comment.save();
+        res.json({
+          message: "successful",
+          comment: comment,
+        });
+      } catch (err) {
+        return next(err);
+      }
     }
   },
 ];

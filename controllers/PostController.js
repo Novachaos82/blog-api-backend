@@ -2,7 +2,9 @@ const PostModel = require("../models/Post");
 const { body, validationResult } = require("express-validator");
 exports.get_all_post = async (req, res, next) => {
   try {
-    const posts = await PostModel.find({}).sort({ date: -1 });
+    const posts = await PostModel.find({})
+      .populate("user_name")
+      .sort({ date: -1 });
     if (posts.length < 0) {
       return res.status(404).json({ message: "Post not found" });
     } else {

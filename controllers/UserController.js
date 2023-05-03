@@ -62,3 +62,8 @@ exports.log_in_post = async (req, res, next) => {
     }
   })(req, res, next);
 };
+
+exports.logout = function (req, res) {
+  req.logout();
+  res.redirect("/");
+};
