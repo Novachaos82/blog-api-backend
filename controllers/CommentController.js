@@ -4,7 +4,7 @@ const PostModel = require("../models/Post");
 exports.comment_post = [
   body("comment", "comment cannot be empty")
     .trim()
-    .isLength({ min: 10 })
+    .isLength({ min: 1 })
     .escape(),
   body("username", "username cannot be empty")
     .trim()
