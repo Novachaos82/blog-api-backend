@@ -18,12 +18,14 @@ exports.sign_up_post = [
       }
     }),
 
-  body("password").isLength(6).withMessage("Minimum length 6 characters"),
+  body("password")
+    .isLength(6)
+    .withMessage("Password must be atleast 6 characters"),
 
   async (req, res, next) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
-      return res.json({
+      return res.status(400).json({
         username: req.body.username,
         errors: errors.array(),
       });
